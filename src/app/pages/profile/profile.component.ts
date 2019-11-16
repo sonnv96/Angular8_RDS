@@ -85,6 +85,7 @@ export class ProfileComponent extends BaseComponent implements OnInit, OnDestroy
     super.ngOnInit();
     this._profileService.getDetail(this._authService.currentUser.id).subscribe((resp) => {
       this.data = new User(resp);
+      debugger
       this.frm.patchValue(this.data);
       if (this.data.latestLoggedin) {
         const dateString = moment(this.data.latestLoggedin).format(AppConstant.format.moment.pipe);

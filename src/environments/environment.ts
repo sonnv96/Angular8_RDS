@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   env: 'Development',
-  domain: '',
+  domain: 'https://localhost:44311/api',
 };

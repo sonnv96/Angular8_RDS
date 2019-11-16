@@ -134,7 +134,7 @@ export class CustomHttpClient {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
     });
 
-    return this.http.post(`${AppConstant.domain}/token`, httpParams, { headers })
+    return this.http.post(`${AppConstant.domain}/token/refresh`, httpParams, { headers })
       .pipe(
         // map((response: any) => response.data),
         tap((responseData: any) => {

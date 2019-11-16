@@ -11,12 +11,13 @@ import { Observable } from 'rxjs/Observable';
 import { Util } from '@services/util';
 import { Permission } from '@common/models/permission.model';
 import { User } from '@common/models/users.model';
+import {CustomHttpClient} from '@services/http';
 
 @Injectable()
 export class AuthService {
   private _currentUser: User;
 
-  constructor(private _http: HttpClient,
+  constructor(private _http: CustomHttpClient,
               private _router: Router,
               private _util: Util,
               private _toast: ToastrService,
@@ -67,30 +68,32 @@ export class AuthService {
     const data = {
       username: username,
       password: password,
-      grant_type: 'password',
-      client_id: AppConstant.clientId,
-      client_secrect: AppConstant.clientSecret
+      // grant_type: 'password',
+      // client_id: AppConstant.clientId,
+      // client_secrect: AppConstant.clientSecret
     };
     const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+      'Content-Type': 'application/json; charset=utf-8 '
     });
-    const shareRequest = this._http.post(`${AppConstant.domain}/token`, this._util.transformRequestHandler(data), {
+    const shareRequest = this._http.Post(`/token`, {'username' : username ,
+      'password' : password}, {
       headers
     }).share();
 
     shareRequest.subscribe((resp: any) => {
+      debugger;
         const userInfo = new User();
-        userInfo.id = resp.userId;
-        userInfo.userName = resp.userName;
+        userInfo.id = '2';
+        userInfo.username = resp.username;
         userInfo.userId = resp.userId;
         userInfo.userGuid = resp.userGuid;
         userInfo.fullName = resp.fullName;
         userInfo.userRoles = resp.userRoles;
         userInfo.permission = resp.permission;
         this.updateUserInfo(userInfo);
-        this._util.setToken(resp.access_token, resp.refresh_token);
+        this._util.setToken(resp.data.accessToken, resp.data.accessToken);
         // get user detail
-        this._http.get(`${AppConstant.domain}/users/${userInfo.id}`).subscribe(user => {
+        this._http.Get(`/user/detail/${userInfo.id}`).subscribe(user => {
           this.updateUserInfo(user);
         });
       }, (err) => {

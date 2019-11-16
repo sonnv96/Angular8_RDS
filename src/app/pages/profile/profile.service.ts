@@ -10,7 +10,7 @@ export class ProfileService {
   }
 
   public getDetail(id): Observable<User> {
-    return this._http.Get<User>(`/users/${id}`);
+    return this._http.Get<User>(`/user/detail/${id}`);
   }
 
   public update(data: User): Observable<any> {

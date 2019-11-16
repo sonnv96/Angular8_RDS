@@ -2,7 +2,7 @@ import { UserRole } from './roles.model';
 
 export class User {
   id?: string;
-  userName?: string;
+  username?: string;
   userId?: string;
   userGuid?: string;
   fullName?: string;
@@ -15,12 +15,11 @@ export class User {
   latestLoggedin?: string;
   isActive?: boolean;
   qrCode?: string;
-  username?: string;
 
   constructor(user?) {
     user = user || {};
     this.id = user.id;
-    this.userName = user.userName;
+    this.username = user.username;
     this.userId = user.userId;
     this.userGuid = user.userGuid;
     this.fullName = user.fullName;
@@ -33,7 +32,6 @@ export class User {
     this.latestLoggedin = user.latestLoggedin;
     this.isActive = user.isActive;
     this.qrCode = user.qrCode || '';
-    this.username = user.username;
   }
 }
 
