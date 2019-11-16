@@ -19,6 +19,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    debugger
     if (!this._authService.isAuthenticated) {
       this.fuseConfig.setConfig({
         layout: {
@@ -34,6 +35,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   public canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    debugger
     if (!this._authService.isAuthenticated) {
       this.fuseConfig.setConfig({
         layout: {

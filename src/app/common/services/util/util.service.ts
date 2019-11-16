@@ -86,9 +86,9 @@ export class Util {
   public showError(error) {
     if (error.message) {
       this._toastrService.error(error.message, 'Error');
-    } else if (error.error_description) {
-      this._toastrService.error(error.error_description, 'Error');
-    } else if (error.errorMessages && error.errorMessages instanceof Array) {
+    } else if (error.errors[0].errorMessage) {
+      this._toastrService.error(error.errors[0].errorMessage, 'Error');
+    } else if (error.errors[0].errorMessage && error.errors[0].errorMessage instanceof Array) {
       let message = '';
       error.errorMessages.forEach((e) => {
         message += (e ? this._translateService.instant(e) : '') + '\n';

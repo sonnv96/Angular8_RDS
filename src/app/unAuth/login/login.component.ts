@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '@services/auth';
-import { FuseConfigService } from '@fuse/services/config.service';
-import { Observable } from 'rxjs/Observable';
-import { fuseAnimations } from '@fuse/animations';
-import { FuseNavigationModel } from 'app/navigation/navigation';
-import { TranslateService } from '@ngx-translate/core';
-import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {AuthService} from '@services/auth';
+import {FuseConfigService} from '@fuse/services/config.service';
+import {Observable} from 'rxjs/Observable';
+import {fuseAnimations} from '@fuse/animations';
+import {FuseNavigationModel} from 'app/navigation/navigation';
+import {TranslateService} from '@ngx-translate/core';
+import {FuseNavigationService} from '@fuse/components/navigation/navigation.service';
 
 @Component({
   selector: 'fuse-login',
@@ -74,16 +74,12 @@ export class FuseLoginComponent implements OnInit {
   }
 
   public onSubmit() {
-    // this.hasError = false;
-    // this.submitted = true;
-    // test
-    this._router.navigateByUrl('pages');
     this.loginOb = this._authService.login(this.loginForm.value.email, this.loginForm.value.password);
     this.loginOb.subscribe((resp) => {
       this._router.navigateByUrl('pages');
       this.fuseNavigationService.setNavigationModel(new FuseNavigationModel(this._authService, this.translate).model);
     }, (err) => {
-      const errorMessage = err.error && err.error.error_description || 'An error occurs when login, please try again or contact administrator for support';
+      const errorMessage = err.error && err.error.errors[0].errorMessage || 'An error occurs when login, please try again or contact administrator for support';
       this._toast.error(errorMessage);
     });
   }

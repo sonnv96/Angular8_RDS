@@ -10,6 +10,7 @@ export const pageRoutes = [
   {
     path: 'pages',
     component: PagesComponent,
+    canActivate: [AuthGuard],
     canActivateChild: [
       AuthGuard,
       PermissionGuard
