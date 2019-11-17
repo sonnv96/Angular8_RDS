@@ -37,5 +37,13 @@ export class User {
 
 export class UserResponse {
   total: number;
-  users: User[];
+  message: string;
+  data: User[];
+
+  constructor(user?) {
+    user = user || {};
+    this.data = user.data;
+    this.total = user.total;
+    this.message = user.message;
+  }
 }

@@ -65,7 +65,7 @@ export class UserListComponent implements OnInit, OnDestroy {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.resultsLength = data.total;
-          return data.users;
+          return data.data;
         }),
         catchError(() => {
           this.isLoadingResults = false;

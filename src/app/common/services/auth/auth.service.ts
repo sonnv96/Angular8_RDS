@@ -10,7 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Util } from '@services/util';
 import { Permission } from '@common/models/permission.model';
-import { User } from '@common/models/users.model';
+import {User, UserResponse} from '@common/models/users.model';
 import {CustomHttpClient} from '@services/http';
 
 @Injectable()
@@ -81,20 +81,16 @@ export class AuthService {
     }).share();
 
     shareRequest.subscribe((resp: any) => {
-      debugger;
         const userInfo = new User();
-        userInfo.id = '2';
-        userInfo.username = resp.username;
-        userInfo.userId = resp.userId;
-        userInfo.userGuid = resp.userGuid;
-        userInfo.fullName = resp.fullName;
-        userInfo.userRoles = resp.userRoles;
-        userInfo.permission = resp.permission;
+        userInfo.id = resp.data.userName;
+        userInfo.username = resp.data.userName;
+        userInfo.userId = resp.data.userId;
         this.updateUserInfo(userInfo);
         this._util.setToken(resp.data.accessToken, resp.data.accessToken);
         // get user detail
-        this._http.Get(`/user/detail/${userInfo.id}`).subscribe(user => {
-          this.updateUserInfo(user);
+        this._http.Get(`/user/detail/${userInfo.userId}`).subscribe(user => {
+          const userDetail = new UserResponse(user);
+          this.updateUserInfo(userDetail.data);
         });
       }, (err) => {
         this.clear();

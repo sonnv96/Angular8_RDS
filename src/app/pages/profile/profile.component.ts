@@ -15,7 +15,7 @@ import {
   Router
 } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { User } from '../../common/models/users.model';
+import {User, UserResponse} from '../../common/models/users.model';
 import * as moment from 'moment';
 import { ProfileDialogComponent } from './detail-dialog/detail-dialog.component';
 import { PasswordDialogComponent } from './password-dialog/password-dialog.component';
@@ -84,8 +84,8 @@ export class ProfileComponent extends BaseComponent implements OnInit, OnDestroy
   ngOnInit() {
     super.ngOnInit();
     this._profileService.getDetail(this._authService.currentUser.id).subscribe((resp) => {
-      this.data = new User(resp);
-      debugger
+      const userResponse = new UserResponse(resp);
+      this.data = new User(userResponse.data);
       this.frm.patchValue(this.data);
       if (this.data.latestLoggedin) {
         const dateString = moment(this.data.latestLoggedin).format(AppConstant.format.moment.pipe);
